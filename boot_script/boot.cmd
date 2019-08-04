@@ -7,7 +7,7 @@ setenv fdtovaddr 0x43c00000
 load mmc 0:1 ${fdtaddr} boot/dtbs/sun8i-h2-plus-orangepi-zero.dtb
 load mmc 0:1 ${fdtovaddr} boot/dtbs/sun8i-h3-analog-codec.dtbo
 load mmc 0:1 0x41000000 boot/vmlinuz
-load mmc 0:1 0x45000000 boot/initramfs-sunxi-new
+load mmc 0:1 0x45000000 boot/initramfs-sunxi
 
 fdt addr ${fdtaddr}
 
