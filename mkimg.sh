@@ -2,13 +2,26 @@
 
 source ./env.sh
 
-mkdir $SRC_DIR
-mkdir $BUILD_DIR
-mkdir $DEST_DIR
+mkdir -p $SRC_DIR
+mkdir -p $BUILD_DIR
+mkdir -p $DEST_DIR
+
+while getopts "c" opt; do
+	case "$opt" in
+		c)
+			clean=1
+			;;
+	esac
+done
 
 ./get_sources.sh
-./init_build.sh
+if [ "$clean" ] ; then
+	./init_build.sh
+fi
+
 ./build_uboot.sh
 ./build_linux.sh
-./dt_overlay/build_overlay.sh
-./boot_script/build.sh
+./build_overlay.sh
+./build_boot_script.sh
+./build_initramfs.sh
+./build_modloop.sh
