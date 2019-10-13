@@ -2,4 +2,5 @@ build/*
 bin/*
 tmp/*
 src/*
+toolchain/*
 *.dtbo

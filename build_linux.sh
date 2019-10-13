@@ -6,8 +6,11 @@ cd $LINUX_BUILD
 export PATH=$PATH:/$TOOLCHAIN
 export DTC_FLAGS=-@
 
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabihf-
+
 # Configure build
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- sunxi_defconfig
+make sunxi_defconfig
 sed -i "s/# CONFIG_SQUASHFS is not set/CONFIG_SQUASHFS=y/g" .config
 sed -i "s/# CONFIG_BLK_DEV_LOOP is not set/CONFIG_BLK_DEV_LOOP=y/g" .config
 sed -i "s/# CONFIG_WLAN is not set/CONFIG_WLAN=y/g" .config
@@ -18,13 +21,13 @@ echo "CONFIG_ATH9K_HTC=m" >> .config
 sed -i "s/# CONFIG_SND_SUN8I_CODEC is not set/CONFIG_SND_SUN8I_CODEC=y/g" .config
 sed -i "s/# CONFIG_SND_SUN8I_CODEC_ANALOG is not set/CONFIG_SND_SUN8I_CODEC_ANALOG=y/g" .config
 
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- olddefconfig
+make olddefconfig
 
 sed -i "s/# CONFIG_SQUASHFS_XZ is not set/CONFIG_SQUASHFS_XZ=y/g" .config
 
 # Start building
-ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j4 zImage dtbs
-ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=out/modules make modules modules_install
+make -j4 zImage dtbs
+INSTALL_MOD_PATH=out/modules make modules modules_install
 
 cd -
 
